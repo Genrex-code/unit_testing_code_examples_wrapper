@@ -55,4 +55,112 @@ class ParkingFeeCalculatorTest {
                 () -> calculator.calculateFee(-1, false)
         );
     }
+
+    @Test
+    void thirtyMinutesShouldChargeBaseFee() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(30, false);
+
+        // Assert
+        assertEquals(20, result);
+    }
+
+    @Test
+    void zeroMinutesShouldBeFree() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(0, false);
+
+        // Assert
+        assertEquals(0, result);
+    }
+
+    @Test
+    void sixteenMinutesShouldChargeBaseFee() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(16, false);
+
+        // Assert
+        assertEquals(20, result);
+    }
+
+    @Test
+    void sixtyMinutesShouldStillChargeBaseFee() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(60, false);
+
+        // Assert
+        assertEquals(20, result);
+    }
+
+    @Test
+    void oneHundredTwentyMinutesShouldChargeExactlyOneAdditionalHour() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(120, false);
+
+        // Assert
+        assertEquals(35, result);
+    }
+
+    @Test
+    void oneHundredTwentyOneMinutesShouldChargeTwoStartedAdditionalHours() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(121, false);
+
+        // Assert
+        assertEquals(50, result);
+    }
+
+    @Test
+    void twoHundredFortyMinutesShouldRemainBelowMaximumFee() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(240, false);
+
+        // Assert
+        assertEquals(65, result);
+    }
+
+    @Test
+    void twoHundredFortyOneMinutesShouldReachMaximumFee() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(241, false);
+
+        // Assert
+        assertEquals(80, result);
+    }
+
+    @Test
+    void lostTicketShouldCostOneHundredFiftyEvenForLongParkingTime() {
+        // Arrange
+        ParkingFeeCalculator calculator = new ParkingFeeCalculator();
+
+        // Act
+        int result = calculator.calculateFee(600, true);
+
+        // Assert
+        assertEquals(150, result);
+    }
 }
