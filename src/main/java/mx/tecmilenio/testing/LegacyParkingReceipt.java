@@ -11,7 +11,7 @@ public class LegacyParkingReceipt {
             return "ERROR";
         }
 
-        if (plate == "") {
+        if (plate.isEmpty()) {
             return "ERROR";
         }
 
@@ -25,9 +25,9 @@ public class LegacyParkingReceipt {
 
         System.out.println("Creating receipt for " + plate);
 
-        boolean free = fee == 0 ? true : false;
+        boolean free = fee == 0;
 
-        if (free == true) {
+        if (free) {
             result = label + " - " + plate
                     + " - " + minutes + " min - FREE";
         } else {
